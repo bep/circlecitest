@@ -50,7 +50,7 @@ workflows:
             value: << pipeline.git.branch >>
         - not:
             matches:
-              pattern: ".+"
-              value: << pipeline.git.tag >>
+              pattern: "NOCIRCLECI"
+              value: git log --format=oneline -n 1 $CIRCLE_SHA1
     jobs:
       - build
