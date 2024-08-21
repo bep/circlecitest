@@ -50,7 +50,8 @@ workflows:
             value: << pipeline.git.branch >>
         - not:
             matches:
-              pattern: "NOCIRCLECI"
-              value: git log --format=oneline -n 1 $CIRCLE_SHA1
+              pattern: ".*NOCIRCLECI.*"
+              value: << pipeline.trigger_parameters.github_app.commit_message >>
+
     jobs:
       - build
