@@ -3,4 +3,4 @@
 [![GoDoc](https://godoc.org/github.com/bep/golibtemplate?status.svg)](https://godoc.org/github.com/bep/golibtemplate)
 
 
-R3..
+R3...
