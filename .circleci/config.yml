@@ -30,8 +30,9 @@ jobs:
       - checkout
       - run:
           command: |
-            export COMMIT_MESSAGE=$(git log -n 1 $CIRCLE_SHA1)
-            echo "{\"commit_message\": \"$COMMIT_MESSAGE\"}" >> set-up-params.json
+            export SKIP=$(git log -n 1 $CIRCLE_SHA1)
+            SKIP=$(git log -n 1 $CIRCLE_SHA1 --pretty=%B | grep -q "NOCIRCLECI" && echo "true" || echo "false")
+            echo "{\"skip\": $SKIP}" >> set-up-params.json
       - continuation/continue:
           parameters: set-up-params.json
           configuration_path: .circleci/build.yml

@@ -7,9 +7,9 @@ version: 2.1
 
 # Parameters passed from setup workflow on config.yml
 parameters:
-  commit_message:
-    type: string
-    default: ''
+  skip:
+    type: boolean
+    default: false
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
@@ -27,7 +27,7 @@ jobs:
     steps:
       # Checkout the code as the first step.
       - run:
-          command: echo "commit message << pipeline.parameters.commit_message >>"
+          command: echo "skip << pipeline.parameters.skip >>"
       - checkout
       - restore_cache:
           keys:
@@ -56,8 +56,6 @@ workflows:
         - matches:
             pattern: "^release.+"
             value: << pipeline.git.branch >>
-        - matches:
-            pattern: "^(?:(?!NOCIRCLECI).)*$"
-            value: << pipeline.parameters.commit_message >>
+        - equal: [false, << pipeline.parameters.skip >>]
     jobs:
       - build
