@@ -22,7 +22,7 @@ jobs:
       # Specify the version you desire here
       # See: https://circleci.com/developer/images/image/cimg/go
       - image: cimg/go:1.21
-      
+
     # Add steps to the job
     # See: https://circleci.com/docs/jobs-steps/#steps-overview & https://circleci.com/docs/configuration-reference/#steps
     steps:
@@ -30,7 +30,7 @@ jobs:
       - checkout
       - run:
           command: |
-            export COMMIT_MESSAGE=$(git log --format=oneline -n 1 $CIRCLE_SHA1)
+            export COMMIT_MESSAGE=$(git log -n 1 $CIRCLE_SHA1)
             echo "{\"commit_message\": \"$COMMIT_MESSAGE\"}" >> set-up-params.json
       - continuation/continue:
           parameters: set-up-params.json
