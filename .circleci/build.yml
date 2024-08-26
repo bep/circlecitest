@@ -47,15 +47,10 @@ jobs:
       - store_test_results:
           path: /tmp/test-reports
 
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   sample:
     when:
       and:
-        - matches:
-            pattern: "^release.+"
-            value: << pipeline.git.branch >>
         - equal: [false, << pipeline.parameters.skip >>]
     jobs:
       - build

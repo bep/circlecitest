@@ -16,8 +16,7 @@ jobs:
       - checkout
       - run:
           command: |
-            export SKIP=$(git log -n 1 $CIRCLE_SHA1)
-            SKIP=$(git log -n 1 $CIRCLE_SHA1 --pretty=%B | grep -q "NOCIRCLECI" && echo "true" || echo "false")
+            export SKIP=$(git log -n 1 $CIRCLE_SHA1 --pretty=%B | grep -q "NOCIRCLECI" && echo "true" || echo "false")
             echo "{\"skip\": $SKIP}" >> set-up-params.json
       - continuation/continue:
           parameters: set-up-params.json
@@ -25,5 +24,10 @@ jobs:
 
 workflows:
   configure:
+    when:
+      and:
+        - matches:
+            pattern: "^release.+"
+            value: << pipeline.git.branch >>
     jobs:
       - setup
